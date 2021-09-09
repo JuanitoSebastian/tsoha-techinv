@@ -1,5 +1,5 @@
 # Tech Inventory
-Tech Inventory on sovellus, jossa esitystekniikkaa omistava taho voi ylläpitää listaa laiteinventaariosta. Sovelluksessa voi lisätä ja poistaa laitteita inventaariosta. Tech Inventoryssä voi myös luoda tuotantoja, joihin laitteet voidaan varata. Näin sovellus osaa kertoa, milloin mikäkin laite on varastossa ja milloin taas käytössä. 
+Tech Inventory on sovellus, jossa voi pitää inventaariota esitystekniikan laitteista. Inventaarioon voi lisätä uusia laitteita, olemassa olevia laitteita voi muokata ja vanhoja laitteita voi poistaa. Tech Inventoryssä voi myös luoda tuotantoja, joihin laitteita voidaan varata. Näin sovelluksesta voi tarkistaa, milloin mitkäkin laitteet ovat vapaana ja milloin käytössä.
 
 ### Sovelluksen ominaisuudet
 * Tunnuksen luominen ja sen avulla sovellukseen kirjautuminen.
