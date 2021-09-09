@@ -10,3 +10,7 @@ Tech Inventory on sovellus, jossa esitystekniikkaa omistava taho voi ylläpitä�
 * Laitteita voi varata tuotantoihin
   * Tuotannolla on kesto (alku pvm - päättymis pvm). 
   * Yksittäisen laitteen voi merkata osaksi tuotantoa. Tällöin laite on varattu tuotannon alusta loppuun saakka, eikä sitä voi varata enää toisiin tuotantoihin.
+
+## Tietokanta
+Alustava relaatiokaavio tietokannasta.
+![Diagram of Database](https://raw.githubusercontent.com/JuanitoSebastian/tsoha-techinv/main/documentation/TechInv_DbDiagram.png)
