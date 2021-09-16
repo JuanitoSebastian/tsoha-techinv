@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Tech Inventory</h1>
 <h3>{{ device.name }}</h3>
 <h2>{{ device.model }}</h2>
-<p>The following {{ count }} entries were found in inventory:</p>
+<p>The following {{ device.count }} entries were found in inventory:</p>
 <ul>
   {% for entry in inventory %}
   <li> {{ entry.serialnum }}
