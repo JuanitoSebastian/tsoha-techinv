@@ -17,7 +17,7 @@ CREATE TABLE UserProductions (
 
 CREATE TABLE UserReservations (
   user_id INTEGER REFERENCES Users,
-  reservation_id INTEGER REFERENCES Reservations
+  reservation_id INTEGER REFERENCES Resemorvations
 );
 
 CREATE TABLE Equipment (
@@ -33,16 +33,16 @@ CREATE TABLE Manufacturers (
 
 CREATE TABLE Inventory (
   id SERIAL PRIMARY KEY,
-  model_id INTEGER REFERENCES Equipment
-  serialnum TEXT
+  model_id INTEGER REFERENCES Equipment,
+  serialnum TEXT,
   available BOOLEAN
 );
 
 CREATE TABLE Productions (
   id SERIAL PRIMARY KEY,
   name TEXT,
-  start TIMESTAMP,
-  end TIMESTAMP
+  starting TIMESTAMP,
+  ending TIMESTAMP
 );
 
 CREATE TABLE Reservations (

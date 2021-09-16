@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+<p>On this page you can find a list of all the equipment in the inventory.</p>
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Manufacturer</th>
+    <th>Stock</th>
+  </tr>
+  {% for device in equipment %}
+  <tr>
+    <td><a href="{{ '/equipment/%s'%device.id }}">{{ device.model }}</a></td>
+    <td>{{ device.manufacturer }}</td>
+    <td>{{ device.count }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

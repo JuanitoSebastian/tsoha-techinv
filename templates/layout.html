@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Tech Inventory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Azeret+Mono:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>Tech Inventory</h1>
+    <div class="navBar">
+      <a href="/" class="navLink">Equipment</a>
+      <a href="/create" class="navLink">Create</a>
+    </div>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+
+</html>
