@@ -20,7 +20,8 @@ CREATE TABLE productions (
 CREATE TABLE equipment (
   id SERIAL PRIMARY KEY,
   model TEXT,
-  manufacturer_id INTEGER REFERENCES manufacturers
+  manufacturer_id INTEGER REFERENCES manufacturers,
+  visible BOOLEAN
 );
 
 CREATE TABLE inventory (
