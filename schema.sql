@@ -1,52 +1,52 @@
-CREATE TABLE Users (
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   name TEXT,
   password TEXT,
   role INTEGER
 );
 
-CREATE TABLE UserInventory (
-  user_id INTEGER REFERENCES Users,
-  inventory_id INTEGER REFERENCES Inventory
+CREATE TABLE userinventory (
+  user_id INTEGER REFERENCES users,
+  inventory_id INTEGER REFERENCES inventory
 );
 
-CREATE TABLE UserProductions (
-  user_id INTEGER REFERENCES Users,
-  production_id INTEGER REFERENCES Productions
+CREATE TABLE userproductions (
+  user_id INTEGER REFERENCES users,
+  production_id INTEGER REFERENCES productions
 );
 
-CREATE TABLE UserReservations (
-  user_id INTEGER REFERENCES Users,
-  reservation_id INTEGER REFERENCES Resemorvations
+CREATE TABLE userreservations (
+  user_id INTEGER REFERENCES users,
+  reservation_id INTEGER REFERENCES reservations
 );
 
-CREATE TABLE Equipment (
+CREATE TABLE equipment (
   id SERIAL PRIMARY KEY,
   model TEXT,
-  manufacturer_id INTEGER REFERENCES Manufacturers
+  manufacturer_id INTEGER REFERENCES manufacturers
 );
 
-CREATE TABLE Manufacturers (
+CREATE TABLE manufacturers (
   id SERIAL PRIMARY KEY,
   name TEXT
 );
 
-CREATE TABLE Inventory (
+CREATE TABLE inventory (
   id SERIAL PRIMARY KEY,
-  model_id INTEGER REFERENCES Equipment,
+  model_id INTEGER REFERENCES equipment,
   serialnum TEXT,
   available BOOLEAN
 );
 
-CREATE TABLE Productions (
+CREATE TABLE productions (
   id SERIAL PRIMARY KEY,
   name TEXT,
   starting TIMESTAMP,
   ending TIMESTAMP
 );
 
-CREATE TABLE Reservations (
+CREATE TABLE reservations (
   id SERIAL PRIMARY KEY,
-  production_id INTEGER REFERENCES Productions,
-  inventory_id INTEGER REFERENCES Inventory
+  production_id INTEGER REFERENCES productions,
+  inventory_id INTEGER REFERENCES inventory
 );

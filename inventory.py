@@ -1,7 +1,7 @@
 from db import db
 
 def get_device_inventory(id):
-  sql = "SELECT serialnum, available FROM inventory WHERE model_id=:id"
+  sql = "SELECT id, serialnum, available FROM inventory WHERE model_id=:id"
   result = db.session.execute(sql, {"id" : id})
   return result.fetchall()
 

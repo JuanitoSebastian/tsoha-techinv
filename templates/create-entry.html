@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="wrapper">
+  <h2>Add inventory entry</h2>
+  <form action="{{ '/insert-entry/%s'%device.id }}" method="POST">
+    <p>{{ device.model }} by {{ device.name }}</p>
+    <p>Serial number:<br>
+      <input type="text" name="serialnum">
+    </p>
+    <input type="submit" value="Add">
+  </form>
+</div>
+{% endblock %}

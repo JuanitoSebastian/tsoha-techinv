@@ -30,8 +30,26 @@ def insertInventoryEntry(id):
 def insert_manufacturer():
   manufacturers.insert_manufacturer(request.form["name"])
   return redirect("/create")
-  
+
 @app.route("/create")
 def create():
+  return redirect("/create/device")
+  
+@app.route("/create/device")
+def create_device():
   list = manufacturers.get_list()
-  return render_template("create.html", manufacturers=list)
+  return render_template("create-device.html", manufacturers=list)
+
+@app.route("/create/manufacturer")
+def create_manufacturer():
+  return render_template("create-manufacturer.html")
+
+@app.route("/create/inventory/<int:id>")
+def create_device_entry(id):
+  device = equipment.get_device(id)
+  return render_template("create-entry.html", device=device)
+
+@app.route("/remove/<int:id>")
+def remove_device(id):
+  equipment.remove_device(id)
+  return redirect("/")

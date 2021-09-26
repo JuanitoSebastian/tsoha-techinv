@@ -17,13 +17,11 @@
   <div class="headerBar">
     <h1>Tech Inventory</h1>
   </div>
-  <div class="navBar">
+  <div class="navBar" id="mainNav">
     <a href="/" class="navLink">Equipment</a>
     <a href="/create" class="navLink">Create</a>
   </div>
-  <div class="wrapper">
-    {% block content %}{% endblock %}
-  </div>
+  {% block content %}{% endblock %}
 </body>
 
 </html>

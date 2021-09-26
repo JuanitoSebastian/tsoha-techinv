@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="navBar" id="subNav">
+  <a href="/create/device" class="navLink">Device</a>
+  <a href="/create/manufacturer" class="navLink">Manufacturer</a>
+  <a href="/create/production" class="navLink">Production</a>
+</div>
+<div class="wrapper">
+  <h2>Add a device</h2>
+  <form action="/insert-device" method="POST">
+    <p>Manufacturer:<br>
+      <select type="number" name="manufacturer_id">
+        {% for manufacturer in manufacturers %}
+        <option value={{manufacturer.id}}>{{ manufacturer.name }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p>Model:<br>
+      <input type="text" name="model">
+    </p>
+    <input type="submit" value="Add">
+  </form>
+</div>
+{% endblock %}

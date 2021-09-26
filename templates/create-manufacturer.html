@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="navBar" id="subNav">
+  <a href="/create/device" class="navLink">Device</a>
+  <a href="/create/manufacturer" class="navLink">Manufacturer</a>
+  <a href="/create/production" class="navLink">Production</a>
+</div>
+<div class="wrapper">
+  <h2>Add a manufacturer</h2>
+  <form action="/insert-manufacturer" method="POST">
+    <p>Name of Manufacturer:<br>
+      <input type="text" name="name">
+    </p>
+    <input type="submit" value="Add">
+  </form>
+</div>
+{% endblock %}
