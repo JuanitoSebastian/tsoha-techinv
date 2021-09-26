@@ -1,7 +1,7 @@
 # Tech Inventory
 Tech Inventory on sovellus, jossa voi pitää inventaariota esitystekniikan laitteista. Inventaarioon voi lisätä uusia laitteita, olemassa olevia laitteita voi muokata ja vanhoja laitteita voi poistaa. Tech Inventoryssä voi myös luoda tuotantoja, joihin laitteita voidaan varata. Näin sovelluksesta voi tarkistaa, milloin mitkäkin laitteet ovat vapaana ja milloin käytössä.
 
-[Välipalautus 2](https://raw.githubusercontent.com/JuanitoSebastian/tsoha-techinv/main/documentation/Välipalautus2.md)
+[Välipalautus 2](https://github.com/JuanitoSebastian/tsoha-techinv/blob/main/documentation/V%C3%A4lipalautus2.md)
 
 ### Sovelluksen ominaisuudet
 * Tunnuksen luominen ja sen avulla sovellukseen kirjautuminen.
