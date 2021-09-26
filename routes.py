@@ -16,12 +16,12 @@ def device(id):
   return render_template("device.html", inventory=deviceInventory, device=device)
 
 @app.route("/insert-device", methods=["POST"])
-def insertDevice():
+def insert_device():
   equipment.insert_device(request.form["model"], request.form["manufacturer_id"])
   return redirect("/")
 
 @app.route("/insert-entry/<int:id>", methods=["POST"])
-def insertInventoryEntry(id):
+def insert_inventory_entry(id):
   inventory.insert_entry(id, request.form["serialnum"], True)
   redirUrl = "/equipment/" + str(id)
   return redirect(redirUrl)
