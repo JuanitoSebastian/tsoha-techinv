@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
+{% set active_page = 'create' %}
+{% set sub_navigation_bar = [
+  ('/create/device', 'create_device', 'Device'),
+  ('/create/manufacturer', 'create_manufacturer', 'Manufacturer'),
+  ('/create/production', 'create_production', 'Production')
+  ] -%}
 {% block content %}
-
-<div class="navBar" id="subNav">
-  <a href="/create/device" class="navLink">Device</a>
-  <a href="/create/manufacturer" class="navLink">Manufacturer</a>
-  <a href="/create/production" class="navLink">Production</a>
-</div>
 <div class="wrapper">
   <h2>Add a device</h2>
-  <form action="/insert-device" method="POST">
+  <form action="/create/device" method="POST">
     <p>Manufacturer:<br>
       <select type="number" name="manufacturer_id">
         {% for manufacturer in manufacturers %}
@@ -19,7 +19,7 @@
     <p>Model:<br>
       <input type="text" name="model">
     </p>
-    <input type="submit" value="Add">
+    <button type="submit">Add device</button>
   </form>
 </div>
 {% endblock %}

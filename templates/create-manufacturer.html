@@ -1,18 +1,29 @@
 {% extends "layout.html" %}
+{% set active_page = 'create' %}
+{% set sub_navigation_bar = [
+  ('/create/device', 'create_device', 'Device'),
+  ('/create/manufacturer', 'create_manufacturer', 'Manufacturer'),
+  ('/create/production', 'create_production', 'Production')
+  ] -%}
+{% block head %}
+<script>
+  function check(form) {
+    if (form.name.value.length < 2) {
+        alert("Name of manufacturer must be at least 2 characters long");
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}
 {% block content %}
-
-<div class="navBar" id="subNav">
-  <a href="/create/device" class="navLink">Device</a>
-  <a href="/create/manufacturer" class="navLink">Manufacturer</a>
-  <a href="/create/production" class="navLink">Production</a>
-</div>
 <div class="wrapper">
   <h2>Add a manufacturer</h2>
-  <form action="/insert-manufacturer" method="POST">
+  <form action="/create/manufacturer" method="POST" onsubmit="return check(this)">
     <p>Name of Manufacturer:<br>
       <input type="text" name="name">
     </p>
-    <input type="submit" value="Add">
+    <button type="submit">Add manufacturer</button>
   </form>
 </div>
 {% endblock %}

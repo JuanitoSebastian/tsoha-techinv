@@ -18,11 +18,13 @@
     <tr>
       <th>Id</th>
       <th>Serial number</th>
+      <th>Available</th>
     </tr>
     {% for entry in inventory %}
     <tr>
       <td>{{ entry.id }}</td>
       <td>{{ entry.serialnum }}</td>
+      <td>{% if entry.available %}✅{% else %}❌{% endif %}</td>
     </tr>
     {% endfor %}
   </table>

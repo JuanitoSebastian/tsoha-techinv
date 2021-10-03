@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
+{% set active_page = 'create' %}
 {% block content %}
 <div class="wrapper">
   <h2>Add inventory entry</h2>
-  <form action="{{ '/insert-entry/%s'%device.id }}" method="POST">
+  <form action="{{ '/create/inventory/%s'%device.id }}" method="POST">
     <p>{{ device.model }} by {{ device.name }}</p>
     <p>Serial number:<br>
       <input type="text" name="serialnum">

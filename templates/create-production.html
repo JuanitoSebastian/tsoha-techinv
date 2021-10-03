@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% set active_page = 'create' %}
+{% set sub_navigation_bar = [
+  ('/create/device', 'create_device', 'Device'),
+  ('/create/manufacturer', 'create_manufacturer', 'Manufacturer'),
+  ('/create/production', 'create_production', 'Production')
+  ] -%}
+{% block content %}
+<div class="wrapper">
+  <h2>Add a production</h2>
+  <form action="/create/production" method="POST">
+    <p>Name:</p>
+    <input type="text" name="name">
+    <p>Start:</p>
+    <input type="date" value="2017-06-01" name="starting">
+    <p>End: </p>  
+    <input type="date" value="2017-06-01" name="ending">
+    <button type=submit>Add production!</button>
+  </form>
+</div>
+{% endblock %}

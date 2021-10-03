@@ -1,3 +1,10 @@
+{% set navigation_bar = [
+('/', 'equipment', 'Equipment'),
+('/productions', 'productions', 'Productions'),
+('/create', 'create', 'Create')
+] -%}
+{% set active_page = active_page|default('equipment') -%}
+
 <!DOCTYPE html>
 <html>
 
@@ -11,16 +18,28 @@
     rel="stylesheet">
   <link rel="stylesheet" href="/static/main.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block head %}{% endblock %}
 </head>
 
 <body>
   <div class="headerBar">
     <h1>Tech Inventory</h1>
   </div>
-  <div class="navBar" id="mainNav">
-    <a href="/" class="navLink">Equipment</a>
-    <a href="/create" class="navLink">Create</a>
-  </div>
+
+  <ul class="navBar" id="mainNav">
+    {% for href, id, caption in navigation_bar %}
+    <li><a href="{{ href }}" {% if id==active_page %} class="navLinkActive" {% else %} class="navLink" {% endif %}>{{
+      caption }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if sub_navigation_bar %}
+  <ul class="navBar" id="subNav">
+    {% for href, id, caption in sub_navigation_bar %}
+    <li><a href="{{ href }}" {% if id==active_page %} class="navLinkActive" {% else %} class="navLink" {% endif %}>{{
+      caption }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
   {% block content %}{% endblock %}
 </body>
 
