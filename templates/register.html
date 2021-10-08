@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% set active_page = "login" %}
+{% block content %}
+<div class="wrapper">
+  <p>Create user.</p>
+  <form action="/register" method="POST">
+    <p>Username:<br>
+      <input type="text" name="username">
+    </p>
+    <p>Password:<br>
+      <input type="password" name="password">
+    </p>
+    <p>Admin:
+      <input type="checkbox" name="admin">
+    </p>
+    <button type="submit">Register</button>
+  </form>
+</div>
+{% endblock %}

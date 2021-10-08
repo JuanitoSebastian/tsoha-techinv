@@ -1,7 +1,8 @@
 {% set navigation_bar = [
 ('/', 'equipment', 'Equipment'),
 ('/productions', 'productions', 'Productions'),
-('/create', 'create', 'Create')
+('/create', 'create', 'Create'),
+('/login', 'login', 'Log In')
 ] -%}
 {% set active_page = active_page|default('equipment') -%}
 
@@ -28,8 +29,8 @@
 
   <ul class="navBar" id="mainNav">
     {% for href, id, caption in navigation_bar %}
-    <li><a href="{{ href }}" {% if id==active_page %} class="navLinkActive" {% else %} class="navLink" {% endif %}>{{
-      caption }}</a></li>
+    <li {% if id=="login" %} style="float:right" {% endif %}><a href="{{ href }}" {% if id==active_page %} class="navLinkActive" {% else %} class="navLink" {% endif %}>
+      {% if id=="login" and session.username %} Logged as {{ session.username }} {% else %} {{ caption }} {% endif %}</a></li>
     {% endfor %}
   </ul>
   {% if sub_navigation_bar %}

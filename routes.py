@@ -1,14 +1,53 @@
 from app import app
-from flask import render_template, request, redirect
+from exceptions import UserAuthorityError
+from flask import render_template, request, redirect, session
 from services.equipment import get_equipment, get_device, insert_device, remove_device
 from services.inventory import get_inventory_for_device, insert_entry_for_device
 from services.manufacturers import get_all_manufacturers, insert_manufacturer
 from services.productions import insert_production, get_all_productions, get_production
+from services.users import check_user_credentials, create_user, get_username, user_id
+
 
 @app.route("/")
 def index():
   list = get_equipment()
   return render_template("index.html", equipment=list)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+  if request.method == "POST":
+    username = request.form["username"]
+    password = request.form["password"]
+
+    if not check_user_credentials(username, password):
+      return render_template("login.html")
+
+    return redirect("/")
+
+  return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+  del session["user_id"]
+  del session["username"]
+  return redirect("/")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+  if request.method == "POST":
+    username = request.form["username"]
+    password = request.form["password"]
+    is_admin = request.form.get("admin") != None
+    
+    if len(username) < 4 | len(password) < 6:
+      return render_template("error.html", errormessage="Username min 4 characters, password min 6 characters")
+
+    if create_user(username, password, is_admin):
+      return redirect("/")
+
+    return render_template("error.html", errormessage="Registration failed")
+
+  return render_template("register.html")
 
 @app.route("/equipment/<int:id>")
 def device(id):
@@ -23,8 +62,16 @@ def create():
 @app.route("/create/device", methods=["GET", "POST"])
 def create_device():
   if request.method == "POST":
-    insert_device(request.form["model"], request.form["manufacturer_id"])
-    return redirect("/")
+    device_model = request.form["model"]
+    manufacturer_id = request.form["manufacturer_id"]
+
+    if len(device_model) < 3:
+      return render_template("error.html", errormessage="Name of model is too short")
+    try:
+      insert_device(device_model, manufacturer_id)
+      return redirect("/")
+    except UserAuthorityError as error:
+      return render_template("error.html", errormessage=error.message) 
 
   list = get_all_manufacturers()
   return render_template("create-device.html", manufacturers=list)
@@ -32,8 +79,15 @@ def create_device():
 @app.route("/create/manufacturer", methods=["GET", "POST"])
 def create_manufacturer():
   if request.method == "POST":
-    insert_manufacturer(request.form["name"])
-    return redirect("/create")
+    manufacturer_name = request.form["name"]
+    if len(manufacturer_name) < 1:
+      return render_template("error.html", errormessage="Name of manufacturer is too short")
+
+    try:
+      insert_manufacturer(manufacturer_name)
+      return redirect("/create")
+    except UserAuthorityError as error:
+      return render_template("error.html", errormessage=error.message) 
 
   return render_template("create-manufacturer.html")
 
@@ -45,9 +99,11 @@ def create_device_entry(id):
     if len(serialnum) < 2:
       return render_template("error.html", errormessage="The provided serial number was too short.")
 
-    insert_entry_for_device(id, serialnum, True)
-    redirUrl = "/equipment/" + str(id)
-    return redirect(redirUrl)
+    try:
+      insert_entry_for_device(id, serialnum, True)
+      return redirect("/equipment/" + str(id))
+    except UserAuthorityError as error:
+      return render_template("error.html", errormessage=error.message)
 
   device = get_device(id)
   return render_template("create-entry.html", device=device)
@@ -61,16 +117,21 @@ def create_production():
 
     if len(name) < 1:
       return render_template("error.html", errormessage="No production name was provided")
-
-    insert_production(name, starting, ending)
-    return redirect("/productions")
+    try:
+      insert_production(name, starting, ending)
+      return redirect("/productions")
+    except UserAuthorityError as error:
+      return render_template("error.html", errormessage=error.message)
     
   return render_template("create-production.html")
 
 @app.route("/remove/<int:id>")
-def remove_device(id):
-  remove_device(id)
-  return redirect("/")
+def remove_device_from_equipment(id):
+  try:
+    remove_device(id)
+    return redirect("/")
+  except UserAuthorityError as error:
+    return render_template("error.html", errormessage=error.message)
 
 @app.route("/productions")
 def productions_page():

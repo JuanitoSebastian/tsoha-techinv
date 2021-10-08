@@ -35,8 +35,18 @@ h1, h2, h3 {
 
 .headerBar {
   padding-left: 40px;
-  padding-right: 40px;
-  width: 100%;
+  padding-right: 66px;
+  height: 60px;
+  padding-top: 20px;
+}
+
+.headerBar h1, .headerBar p {
+  display: inline;
+  
+}
+
+.headerBar p {
+  float: right;
 }
 
 
