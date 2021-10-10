@@ -141,6 +141,11 @@ button {
   font-weight: bold;
 }
 
+button:disabled {
+  background-color: #DEE3E8;
+  cursor: not-allowed;
+}
+
 .btn-group:after {
   display: table;
 }

@@ -1,6 +1,7 @@
 from db import db
 from services.users import user_id
-import exceptions
+from exceptions import UserAuthorityError
+
 
 def get_all_manufacturers():
   sql = "SELECT id, name FROM manufacturers"
@@ -9,7 +10,7 @@ def get_all_manufacturers():
 
 def insert_manufacturer(name):
   if user_id() == 0:
-    raise exceptions.UserAuthorityError("User not logged in")
+    raise UserAuthorityError("User not logged in")
 
   sql = "INSERT INTO manufacturers (name) VALUES (:name) RETURNING id"
   result = db.session.execute(sql, { "name" : name })

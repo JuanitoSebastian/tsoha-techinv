@@ -8,7 +8,7 @@
     <p>Serial number:<br>
       <input type="text" name="serialnum">
     </p>
-    <input type="submit" value="Add">
+    <input type="submit" value="Add" {% if session.username is not defined %} disabled {% endif %}>
   </form>
 </div>
 {% endblock %}

@@ -23,7 +23,7 @@
     <p>Name of Manufacturer:<br>
       <input type="text" name="name">
     </p>
-    <button type="submit">Add manufacturer</button>
+    <button type="submit" {% if session.username is not defined %} disabled {% endif %}>Add manufacturer</button>
   </form>
 </div>
 {% endblock %}

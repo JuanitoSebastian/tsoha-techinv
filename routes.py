@@ -24,7 +24,15 @@ def login():
 
     return redirect("/")
 
+  if user_id() != 0:
+    return redirect("/user")
   return render_template("login.html")
+
+@app.route("/user")
+def user_page():
+  if user_id() == 0:
+    return redirect("/login")
+  return render_template("user.html")
 
 @app.route("/logout")
 def logout():
@@ -51,9 +59,10 @@ def register():
 
 @app.route("/equipment/<int:id>")
 def device(id):
+  production_id = request.args.get("production")
   deviceInventory = get_inventory_for_device(id)
   device = get_device(id)
-  return render_template("device.html", inventory=deviceInventory, device=device)
+  return render_template("equipment.html", inventory=deviceInventory, device=device, production_id=production_id)
 
 @app.route("/create")
 def create():
@@ -100,7 +109,7 @@ def create_device_entry(id):
       return render_template("error.html", errormessage="The provided serial number was too short.")
 
     try:
-      insert_entry_for_device(id, serialnum, True)
+      insert_entry_for_device(id, serialnum)
       return redirect("/equipment/" + str(id))
     except UserAuthorityError as error:
       return render_template("error.html", errormessage=error.message)

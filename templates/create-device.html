@@ -19,7 +19,7 @@
     <p>Model:<br>
       <input type="text" name="model">
     </p>
-    <button type="submit">Add device</button>
+    <button type="submit" {% if session.username is not defined %} disabled {% endif %}>Add device</button>
   </form>
 </div>
 {% endblock %}

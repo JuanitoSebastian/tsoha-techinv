@@ -27,8 +27,7 @@ CREATE TABLE equipment (
 CREATE TABLE inventory (
   id SERIAL PRIMARY KEY,
   model_id INTEGER REFERENCES equipment ON DELETE CASCADE,
-  serialnum TEXT,
-  available BOOLEAN
+  serialnum TEXT
 );
 
 CREATE TABLE reservations (

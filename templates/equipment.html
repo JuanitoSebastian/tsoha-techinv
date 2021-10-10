@@ -11,13 +11,18 @@
     <tr>
       <th>Id</th>
       <th>Serial number</th>
-      <th>Available</th>
+      {% if production_id %}
+      <th>Reserve</th>
+      {% endif %}
     </tr>
     {% for entry in inventory %}
     <tr>
       <td>{{ entry.id }}</td>
       <td>{{ entry.serialnum }}</td>
-      <td>{% if entry.available %}✅{% else %}❌{% endif %}</td>
+      {% if production_id %}
+      <td><a href="{{ '/reserve/%s?production=%s' % (device.id, production_id) }}">Reserve</a></td>
+      {% endif %}
+
     </tr>
     {% endfor %}
   </table>

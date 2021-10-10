@@ -12,10 +12,10 @@
     <p>Name:</p>
     <input type="text" name="name">
     <p>Start:</p>
-    <input type="date" value="2017-06-01" name="starting">
+    <input type="date" name="starting">
     <p>End: </p>  
-    <input type="date" value="2017-06-01" name="ending">
-    <button type=submit>Add production!</button>
+    <input type="date" name="ending">
+    <button type=submit {% if session.username is not defined %} disabled {% endif %}>Add production!</button>
   </form>
 </div>
 {% endblock %}
