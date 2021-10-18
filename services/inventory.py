@@ -18,5 +18,14 @@ def insert_entry_for_device(model_id, serialnum):
   db.session.execute(sql, { "user_id": user_id(), "inventory_id": inventory_id})
   db.session.commit()
 
-def check_availability(inventory_id, starting_date, ending_date):
-  return False
+# Returns 0 if available, 1 if not available, 2 if reserved for this produciton already
+def check_availability(inventory_id, production):
+  sql = "SELECT COUNT(*) FROM reservations WHERE inventory_id=:inventory_id AND production_id=:production_id"
+  result = db.session.execute(sql, { "inventory_id": inventory_id, "production_id": production.id })
+  count = result.fetchone()[0]
+  if count != 0: return 2
+
+  sql = "SELECT COUNT(*) FROM reservations, productions WHERE reservations.inventory_id=:inventory_id AND productions.id=reservations.production_id AND (:starting_date <= productions.ending) AND (productions.starting <= :ending_date)"
+  result = db.session.execute(sql, { "inventory_id": inventory_id, "starting_date": production.starting, "ending_date": production.ending })
+  count = result.fetchone()[0]
+  return 0 if count == 0 else 1

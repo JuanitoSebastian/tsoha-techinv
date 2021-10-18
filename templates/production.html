@@ -1,8 +1,31 @@
 {% extends "layout.html" %}
 {% set active_page = 'productions' %}
+{% import "components.html" as components %}
+{% set action_bar_content = [
+  ("/reserve?production=%s" % production.id, "create-reservation", "➕ Reserve equipment")
+  ] -%}
 {% block content %}
+{{ components.production_title_bar(production.name, "%s - %s" % (production.starting, production.ending), production.creator, reservations|length) }}
 <div class="wrapper">
-  <h2>{{ production.name }}</h2>
-  <p>{{ production.starting }} - {{ production.ending }}</p>
+  {{ components.action_bar(action_bar_content)}}
+  {% if reservations|length > 0 %}
+  <table class="equipment-table">
+    <tr>
+      <th>Manufacturer</th>
+      <th>Model</th>
+      <th>Serial number</th>
+    </tr>
+    {% for device in reservations %}
+    <tr>
+      <td>{{ device.manufacturer }}</td>
+      <td>{{ device.model }}</td>
+      <td>{{ device.serialnum }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>No equipment reserved for this production.</p>
+  {% endif %}
+
 </div>
 {% endblock %}

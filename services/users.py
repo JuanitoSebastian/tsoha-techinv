@@ -57,3 +57,6 @@ def get_username(user_id):
 def user_id():
     return session.get("user_id", 0)
 
+def end_session():
+  del session["user_id"]
+  del session["username"]

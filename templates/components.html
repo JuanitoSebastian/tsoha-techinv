@@ -1,0 +1,39 @@
+{% macro button_link(text, href)%}
+<form action="{{ href }}">
+  <button type="submit">{{ text }}</button>
+</form>
+{% endmacro %}
+
+{% macro equipment_title_bar(model, manufacturer, username, count) %}
+<div class="title-bar">
+  <div class="wrapper">
+    <span class="title-bar-text">
+      <h2>{{ manufacturer }}</h2>
+      <h1>{{ model }}</h1>
+      <p>Added to inventory by <span class="italic">{{ username }}</p>
+      <p class="device-amount-badge-text">{{ count }} in stock</p>
+    </span>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro production_title_bar(name, date, username, device_count) %}
+<div class="title-bar">
+  <div class="wrapper">
+    <span class="title-bar-text">
+      <h1>{{ name }}</h1>
+      <p>{{ date }}</p>
+      <p>Created by <span class="italic">{{ username }}</p>
+      <p class="device-amount-badge-text">{{ device_count }} reservations</p>
+    </span>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro action_bar(links) %}
+<ul class="action-bar">
+  {% for href, id, caption in links %}
+  <li class="action-bar-item"><a href="{{ href }}">{{ caption }}</a></li>
+  {% endfor %}
+</ul>
+{% endmacro%}
