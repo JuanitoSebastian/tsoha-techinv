@@ -1,0 +1,36 @@
+@use "colors";
+
+form {
+  display: inline;
+}
+
+.creation-form {
+  line-height: 40px;
+}
+
+.form-button {
+  color: 272727;
+  border-radius: 5px;
+  background-color: colors.$gray-lighter;
+  border-bottom: colors.$lilac-medium 3px solid;
+  transition: all 250ms;
+}
+
+.form-input {
+  font-family: 'Azeret Mono', monospace;
+  font-size: 14px;
+  padding: 10px;
+  display: block;
+}
+
+.form-button--send {
+  float: right;
+}
+
+.form-button--send:hover {
+  border-bottom-color: colors.$mint;
+}
+
+.form-caption {
+  font-weight: bold;
+}

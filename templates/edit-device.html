@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% import "components.html" as components %}
+{% set active_page = "equipment" %}
+{% set form_content = ([
+  ("select", {
+    "name": "manufacturer_id", 
+    "label": "Manufacturer", 
+    "selected": device.manufacturer_id, 
+    "options": manufacturers 
+  }),
+  ("text", {
+    "name": "model",
+    "label": "Model",
+    "value": device.model
+  })
+  ]) %}
+{% block content %}
+<div class="wrapper">
+  <div class="container{% if session.username is not defined %} container--blurred{% endif %}">
+    <h2>Edit device</h2>
+    {{ components.form(form_content, "creation-form", "/edit/device/%s" % device.id, "Save changes") }}
+  </div>
+</div>
+{% endblock %}

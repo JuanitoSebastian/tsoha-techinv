@@ -1,0 +1,43 @@
+@use "colors";
+
+.action-bar {
+  padding: 0;
+  margin: 10px 0px;
+  list-style-type: none;
+  overflow: hidden;
+  float: right;
+}
+
+.action-bar-item {
+  border-radius: 2px;
+  float: left;
+  margin: 0px 10px;
+  padding: 5px 10px;
+  background-color: colors.$white;
+  border-bottom: colors.$lilac-medium 3px solid;
+  transition: all 250ms;
+  cursor: pointer;
+}
+
+.action-bar-item--destructive:hover {
+  border-bottom-color: colors.$red;
+}
+
+.action-bar-item--create:hover {
+  border-bottom-color: colors.$mint;
+}
+
+.action-bar-item--edit:hover {
+  border-bottom-color: colors.$yellow;
+}
+
+.action-bar-item:hover {
+  color: colors.$white;
+}
+
+.action-bar-item a {
+  color: colors.$gray-dark;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: bold;
+}

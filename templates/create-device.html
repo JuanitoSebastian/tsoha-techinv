@@ -1,25 +1,28 @@
 {% extends "layout.html" %}
-{% set active_page = 'create' %}
+{% import "components.html" as components %}
+{% set active_page = "create" %}
+{% set active_sub = "create_device" %}
 {% set sub_navigation_bar = [
-  ('/create/device', 'create_device', 'Device'),
-  ('/create/manufacturer', 'create_manufacturer', 'Manufacturer'),
-  ('/create/production', 'create_production', 'Production')
-  ] -%}
+('/create/device', 'create_device', 'Device'),
+('/create/manufacturer', 'create_manufacturer', 'Manufacturer'),
+('/create/production', 'create_production', 'Production')
+] -%}
+{% set form_content = [
+  ("select", {
+    "name": "manufacturer_id",
+    "label": "Manufacturer",
+    "options": manufacturers
+  }),
+  ("text", {
+    "name": "model",
+    "label": "Model"
+  })
+  ] %}
 {% block content %}
 <div class="wrapper">
-  <h2>Add a device</h2>
-  <form action="/create/device" method="POST">
-    <p>Manufacturer:<br>
-      <select type="number" name="manufacturer_id">
-        {% for manufacturer in manufacturers %}
-        <option value={{manufacturer.id}}>{{ manufacturer.name }}</option>
-        {% endfor %}
-      </select>
-    </p>
-    <p>Model:<br>
-      <input type="text" name="model">
-    </p>
-    <button type="submit" {% if session.username is not defined %} disabled {% endif %}>Add device</button>
-  </form>
+  <div class="container{% if session.username is not defined %} container--blurred{% endif %}">
+    <h2>Add a device</h2>
+    {{ components.form(form_content, "creation-form", "/create/device", "Add device") }}
+  </div>
 </div>
 {% endblock %}

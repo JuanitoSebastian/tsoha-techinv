@@ -1,8 +1,29 @@
 {% extends "layout.html" %}
 {% import "components.html" as components %}
+{% block head %}
+<script>
+  function deleteButton() {
+    const button = document.getElementById("action-bar-confirm")
+    var count = 0
+
+    button.addEventListener("click", () => {
+      if (count > 0) {
+        window.location.href = "/remove/{{ device.id }}"
+      }
+
+      if (count == 0) {
+        button.innerHTML = "❌ Delete now"
+        count += 1
+      }
+    })
+  }
+  document.addEventListener("DOMContentLoaded", deleteButton)
+</script>
+{% endblock %}
 {% set action_bar_content = [
-  ("/create/inventory/%s"%device.id, "create-entry", "➕ Create entry"),
-  ("/remove/%s"%device.id, "delete-device", "🗑 Delete device")
+  ("/create/inventory/%s"%device.id, "create", "➕ Create entry"),
+  ("/edit/device/%s"%device.id, "edit", "🖌 Edit"),
+  ("/remove/%s"%device.id, "destructive_confirm", "🗑 Delete device")
   ] -%}
 {% block content %}
 {{ components.equipment_title_bar(device.model, device.name, device.creator, device.count) }}
@@ -30,7 +51,7 @@
     {% endfor %}
   </table>
   {% if session.production_id %}
-  <button type="submit">Reserve equipment</button>
+  <button class="form-button form-button--send" type="submit">Save reservations</button>
   </form>
   {% endif %}
   {% else %}

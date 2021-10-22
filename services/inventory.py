@@ -29,3 +29,9 @@ def check_availability(inventory_id, production):
   result = db.session.execute(sql, { "inventory_id": inventory_id, "starting_date": production.starting, "ending_date": production.ending })
   count = result.fetchone()[0]
   return 0 if count == 0 else 1
+
+def get_user_inventory_count(user_id):
+  sql = "SELECT COUNT(*) FROM userinventory WHERE user_id=:user_id"
+  result = db.session.execute(sql, { "user_id": user_id })
+  count = result.fetchone()[0]
+  return count

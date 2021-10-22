@@ -1,0 +1,51 @@
+@use "colors";
+
+.navigation-bar {
+  padding-left: 40px;
+  padding-right: 40px;
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+}
+
+.navigation-bar--main {
+  background-color: colors.$lilac;
+}
+
+.navigation-bar--sub {
+  background-color: colors.$lilac-medium;
+}
+
+.navigation-bar-link {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  float: left;
+}
+
+.navigation-bar-link a {
+  color: colors.$white;
+  text-decoration: none;
+}
+
+.navigation-bar-link:hover {
+  background-color: colors.$lilac-medium;
+}
+
+.navigation-bar-link:active {
+  font-weight: bold;
+}
+
+.navigation-bar-link--user {
+  float: right;
+}
+
+.navigation-bar-link--active {
+  background-color: colors.$lilac-medium;
+  font-weight: bold;
+}
+
+.navigation-bar-sub-link--active {
+  text-decoration: underline;
+  color: colors.$white;
+}

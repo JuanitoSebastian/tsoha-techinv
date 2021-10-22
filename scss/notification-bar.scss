@@ -1,0 +1,31 @@
+@use "colors";
+
+.notification-bar {
+  width: 100%;
+  height: 20px;
+  display: inline-block;
+  font-size: 14px;
+  padding: 10px 0px;
+  text-align: center;
+}
+
+.notification-bar--info {
+  background-color: colors.$gray-lighter;
+  color: colors.$gray-dark;
+}
+
+.notification-bar--error {
+  background-color: colors.$red;
+  color: colors.$white;
+}
+
+.notification-bar--reserving {
+  background-color: colors.$mint;
+  color: colors.$gray-dark;
+}
+
+.notification-bar a {
+  color: colors.$gray-dark;
+  font-weight: bold;
+  text-decoration: none;
+}

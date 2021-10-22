@@ -1,12 +1,15 @@
 {% extends "layout.html" %}
+{% set active_page = 'productions' %}
 {% import "components.html" as components %}
 {% import "scripts.html" as scripts %}
+
 {% block head %}
 {{ scripts.make_table_clickable() }}
 {% endblock %}
+
 {% block content %}
 <div class="wrapper">
-  {{ components.action_bar([("/create/device", "create", "➕ Create new device")])}}
-  {{ components.clickable_table(["Model", "Manufacturer", "Stock"], equipment, "equipment") }}
+  {{ components.action_bar([("/create/production", "create", "➕ Create new production")])}}
+  {{ components.clickable_table(["Name", "Starting", "Ending"], productions, "productions") }}
 </div>
 {% endblock %}

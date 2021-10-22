@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
+{% import "components.html" as components %}
 {% set active_page = "login" %}
 {% block content %}
+{{ components.user_title_bar(session.username, inventory_count )}}
 <div class="wrapper">
-  <h1>{{ session.username }}</h1>
-  <a href="/logout">Log out</a>
+  {{ components.action_bar([("/logout", "destructive", "❌ Log out")]) }}
 </div>
 {% endblock %}

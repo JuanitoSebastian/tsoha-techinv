@@ -2,7 +2,7 @@
 ("/", "equipment", "Equipment", "navigation-bar-link"),
 ("/productions", "productions", "Productions", "navigation-bar-link"),
 ("/create", "create", "Create", "navigation-bar-link"),
-("/login", "login", "Log In", "navigation-bar-link navigation-bar-link--user")
+("/login", "login", "Log in", "navigation-bar-link navigation-bar-link--user")
 ] -%}
 {% set active_page = active_page|default('equipment') -%}
 
@@ -36,13 +36,18 @@
   {% if sub_navigation_bar %}
   <ul class="navigation-bar navigation-bar--sub">
     {% for href, id, caption in sub_navigation_bar %}
-    <li><a href="{{ href }}" {% if id==active_page %} class="navLinkActive" {% else %} class="navLink" {% endif %}>{{
-      caption }}</a></li>
+    <li class="navigation-bar-link{% if id == active_sub %} navigation-bar-sub-link--active{% endif %}"><a href="{{ href }}">{{ caption }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
-  {% if active_page == "equipment" and session.production_id %}
-  <div class="status-bar status-bar--reserving">Reserving equipment for {{ session.production_name }}. <a href="/reserve">Stop reserving!</a></div>
+  {% if notification %}
+  {% if notification.type == "error" %}
+  <div class="notification-bar notification-bar--error">{{ notification.message }}</div>
+  {% elif notification.type == "reserving" %}
+  <div class="notification-bar notification-bar--reserving">Reserving equipment for {{ session.production_name }}. <a href="/reserve">Stop reserving!</a></div>
+  {% else %}
+  <div class="notification-bar notification-bar--info">{{ notification.message }}</div>
+  {% endif%}
   {% endif %}
   {% block content %}{% endblock %}
 </body>

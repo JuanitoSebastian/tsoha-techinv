@@ -1,21 +1,31 @@
 {% extends "layout.html" %}
+{% import "components.html" as components %}
 {% set active_page = 'create' %}
+{% set active_sub = "create_production" %}
 {% set sub_navigation_bar = [
-  ('/create/device', 'create_device', 'Device'),
-  ('/create/manufacturer', 'create_manufacturer', 'Manufacturer'),
-  ('/create/production', 'create_production', 'Production')
-  ] -%}
+('/create/device', 'create_device', 'Device'),
+('/create/manufacturer', 'create_manufacturer', 'Manufacturer'),
+('/create/production', 'create_production', 'Production')
+] -%}
+{% set form_content = [
+  ("text", {
+    "name": "name",
+    "label": "Name"
+  }),
+  ("date", {
+    "name": "starting",
+    "label": "Start"
+  }),
+  ("date", {
+    "name": "ending",
+    "label": "End"
+  })
+  ] %}
 {% block content %}
 <div class="wrapper">
-  <h2>Add a production</h2>
-  <form action="/create/production" method="POST">
-    <p>Name:</p>
-    <input type="text" name="name">
-    <p>Start:</p>
-    <input type="date" name="starting">
-    <p>End: </p>  
-    <input type="date" name="ending">
-    <button type=submit {% if session.username is not defined %} disabled {% endif %}>Add production!</button>
-  </form>
+  <div class="container{% if session.username is not defined %} container--blurred{% endif %}">
+    <h2>Add a production</h2>
+    {{ components.form(form_content, "creation-form", "/create/production", "Add production") }}
+  </div>
 </div>
 {% endblock %}

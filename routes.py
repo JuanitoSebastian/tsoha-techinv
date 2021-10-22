@@ -1,8 +1,8 @@
 from app import app
 from exceptions import UserAuthorityError
 from flask import render_template, request, redirect, session
-from services.equipment import get_equipment, get_device, insert_device, remove_device
-from services.inventory import check_availability, get_inventory_for_device, insert_entry_for_device
+from services.equipment import get_equipment, get_device, insert_device, remove_device, update_device
+from services.inventory import check_availability, get_inventory_for_device, insert_entry_for_device, get_user_inventory_count
 from services.manufacturers import get_all_manufacturers, insert_manufacturer
 from services.productions import insert_production, get_all_productions, get_production
 from services.users import check_user_credentials, create_user, get_username, user_id, end_session
@@ -20,7 +20,11 @@ def login():
     password = request.form["password"]
 
     if not check_user_credentials(username, password):
-      return render_template("login.html")
+      notification = { 
+        "message": "Wrong password or username. Please try again.",
+        "type": "error"
+       }
+      return render_template("login.html", notification=notification)
 
     return redirect("/")
 
@@ -32,7 +36,9 @@ def login():
 def user_page():
   if user_id() == 0:
     return redirect("/login")
-  return render_template("user.html")
+  
+  inventory_count = get_user_inventory_count(user_id())
+  return render_template("user.html", inventory_count = inventory_count)
 
 @app.route("/logout")
 def logout():
@@ -66,14 +72,19 @@ def device(id):
     availability = []
     for entry in deviceInventory:
       availability.append(check_availability(entry.id, production))
-    return render_template("equipment.html", inventory=deviceInventory, device=device, availability=availability)
+    notification = { "type": "reserving" }
+    return render_template("equipment.html", inventory=deviceInventory, device=device, availability=availability, notification=notification)
 
   return render_template("equipment.html", inventory=deviceInventory, device=device)
 
 @app.route("/equipment")
 def equipment_list():
-  production_id = request.args.get("production")
   list = get_equipment()
+
+  if reservation_mode_production_id() != 0:
+    notification = { "type": "reserving" } 
+    return render_template("equipment_list.html", equipment=list, notification=notification)
+
   return render_template("equipment_list.html", equipment=list)
 
 @app.route("/create")
@@ -94,8 +105,20 @@ def create_device():
     except UserAuthorityError as error:
       return render_template("error.html", errormessage=error.message) 
 
-  list = get_all_manufacturers()
-  return render_template("create-device.html", manufacturers=list)
+  manufacturers = get_all_manufacturers()
+  manuufacturer_dicts = []
+  for manufacturer in manufacturers:
+    dictionary = {"value": manufacturer.id, "label": manufacturer.name}
+    manuufacturer_dicts.append(dictionary)
+
+  if user_id() == 0:
+    notification = {
+      "type": "info",
+      "message": "Log in to edit the inventory"
+    }
+    return render_template("create-device.html", notification=notification, manufacturers=manuufacturer_dicts)
+
+  return render_template("create-device.html", manufacturers=manuufacturer_dicts)
 
 @app.route("/create/manufacturer", methods=["GET", "POST"])
 def create_manufacturer():
@@ -109,6 +132,13 @@ def create_manufacturer():
       return redirect("/create")
     except UserAuthorityError as error:
       return render_template("error.html", errormessage=error.message) 
+
+  if user_id() == 0:
+    notification = {
+      "type": "info",
+      "message": "Log in to edit the inventory"
+    }
+    return render_template("create-manufacturer.html", notification=notification)
 
   return render_template("create-manufacturer.html")
 
@@ -127,6 +157,14 @@ def create_device_entry(id):
       return render_template("error.html", errormessage=error.message)
 
   device = get_device(id)
+
+  if user_id() == 0:
+    notification = {
+      "type": "info",
+      "message": "Log in to edit the inventory"
+    }
+    return render_template("create-entry.html", notification=notification, device=device)
+
   return render_template("create-entry.html", device=device)
 
 @app.route("/create/production", methods=["GET", "POST"])
@@ -143,6 +181,13 @@ def create_production():
       return redirect("/productions")
     except UserAuthorityError as error:
       return render_template("error.html", errormessage=error.message)
+
+  if user_id() == 0:
+    notification = {
+      "type": "info",
+      "message": "Log in to edit the inventory"
+    }
+    return render_template("create-production.html", notification=notification)
     
   return render_template("create-production.html")
 
@@ -189,11 +234,32 @@ def remove_device_from_equipment(id):
   except UserAuthorityError as error:
     return render_template("error.html", errormessage=error.message)
 
+@app.route("/edit/device/<int:device_id>", methods = ["POST", "GET"])
+def edit_device(device_id):
+  if request.method == "POST":
+    model_to_set = request.form["model"]
+    manufacturer_id_to_set = request.form["manufacturer_id"]
+
+    if len(model_to_set) < 3:
+      return render_template("error.html", errormessage="Name of model is too short")
+    try:
+      update_device(device_id, model_to_set, manufacturer_id_to_set)
+      return redirect("/equipment/%s" % device_id)
+    except UserAuthorityError as error:
+      return render_template("error.html", errormessage=error.message) 
+
+  device = get_device(device_id)
+  manufacturers = get_all_manufacturers()
+  manuufacturer_dicts = []
+  for manufacturer in manufacturers:
+    dictionary = {"value": manufacturer.id, "label": manufacturer.name}
+    manuufacturer_dicts.append(dictionary)
+  return render_template("edit-device.html", device = device, manufacturers = manuufacturer_dicts)
 
 @app.route("/productions")
 def productions_page():
   list = get_all_productions()
-  return render_template("productions.html", productions=list)
+  return render_template("production_list.html", productions=list)
 
 @app.route("/productions/<int:production_id>")
 def production(production_id):

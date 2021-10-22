@@ -1,0 +1,19 @@
+{% macro make_table_clickable(table_id = "clickable-table") %}
+<script>
+  function makeRowsClickable() {
+    const table = document.getElementById("{{ table_id }}")
+    const rowCount = table.rows.length
+
+    for (var i = 1; i < rowCount; i++) {
+      const link = document.getElementById(`link-${i}`)
+      const href = link.href
+
+      const row = document.getElementById(`row-${i}`)
+      row.addEventListener("click", () => {
+        window.location.href = href
+      })
+    }
+  }
+  document.addEventListener("DOMContentLoaded", makeRowsClickable)
+</script>
+{% endmacro %}

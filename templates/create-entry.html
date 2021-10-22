@@ -2,13 +2,14 @@
 {% set active_page = 'create' %}
 {% block content %}
 <div class="wrapper">
-  <h2>Add inventory entry</h2>
-  <form action="{{ '/create/inventory/%s'%device.id }}" method="POST">
-    <p>{{ device.model }} by {{ device.name }}</p>
-    <p>Serial number:<br>
-      <input type="text" name="serialnum">
-    </p>
-    <input type="submit" value="Add" {% if session.username is not defined %} disabled {% endif %}>
-  </form>
+  <div class="container{% if session.username is not defined %} container--blurred{% endif %}">
+    <h2>Add inventory entry</h2>
+    <h3>{{ device.model }} by {{ device.name }}</h3>
+    <form class="creation-form" action="{{ '/create/inventory/%s'%device.id }}" method="POST">
+      <p class="form-caption">Serial number:</p>
+      <input class="form-input" type="text" name="serialnum">
+      
+      <button class="form-button form-button--send" type="submit" {% if session.username is not defined %} disabled {% endif %}>Add</button>
+  </div>
 </div>
 {% endblock %}

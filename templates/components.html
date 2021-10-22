@@ -24,7 +24,21 @@
       <h1>{{ name }}</h1>
       <p>{{ date }}</p>
       <p>Created by <span class="italic">{{ username }}</p>
-      <p class="device-amount-badge-text">{{ device_count }} reservations</p>
+      <p class="device-amount-badge-text">{% if device_count == 0 %} No reservations {% elif device_count == 1 %} {{
+        device_count }} reservation {% else %}{{ device_count }} reservations{% endif %}</p>
+    </span>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro user_title_bar(username, inventory_count) %}
+<div class="title-bar">
+  <div class="wrapper">
+    <span class="title-bar-text">
+      <h1>{{ username }}</h1>
+      <p class="device-amount-badge-text">{% if inventory_count == 0 %} No entries in inventory {% elif device_count ==
+        1 %} {{
+        inventory_count }} inventory entry {% else %}{{ inventory_count }} inventory entries{% endif %}</p>
     </span>
   </div>
 </div>
@@ -32,8 +46,64 @@
 
 {% macro action_bar(links) %}
 <ul class="action-bar">
-  {% for href, id, caption in links %}
-  <li class="action-bar-item"><a href="{{ href }}">{{ caption }}</a></li>
+  {% for href, type, caption in links %}
+  {% if type == "destructive_confirm" %}
+  <li class="action-bar-item action-bar-item--destructive"><a id="action-bar-confirm">{{ caption }}</a></li>
+  {% else %}
+  <li class="action-bar-item {% if type == "create" %}action-bar-item--create{% elif type=="destructive"
+    %}action-bar-item--destructive{% elif type=="edit" %}action-bar-item--edit{% endif %}"><a href="{{ href }}">{{
+      caption }}</a></li>
+  {% endif%}
   {% endfor %}
 </ul>
 {% endmacro%}
+
+{% macro clickable_table(header_titles, content, link_path) %}
+<table class="equipment-table equipment-table--clickable" id="clickable-table">
+  <tr>
+    {% for title in header_titles %}
+    <th>{{ title }}</th>
+    {% endfor %}
+  </tr>
+  {% for row in content %}
+  <tr id="{{ 'row-%s' % loop.index }}">
+    <td><a id="{{ 'link-%s' % loop.index }}" href="{{ '/%s/%s' % (link_path, row[0]) }}">{{ row[1] }}</a></td>
+    {% for column in row %}
+    {% if loop.index0 > 1 %}
+    <td>{{ column }}</td>
+    {% endif %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+{% endmacro %}
+
+{% macro form(contents, class, action, submit_label) %}
+<form class="creation-form" action="{{ action }}" method="POST">
+  {% for type, content in contents %}
+  {% if type == "select" %}
+  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+  <select class="form-input" type="number" name="{{ content.name }}">
+    {% for option in content.options %}
+    <option value="{{ option.value }}" {% if option.value == content.selected %} selected {% endif %}>{{ option.label }}
+    </option>
+    {% endfor %}
+  </select>
+  {% elif type == "password" %}
+  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+  <input class="form-input" type="password" name="{{ content.name }}">
+  {% elif type == "text" %}
+  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+  <input class="form-input" type="text" name="{{ content.name }}" {% if content.value %} value="{{ content.value }}" {%
+    endif %}>
+  {% elif type == "date" %}
+  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+  <input class="form-input" type="date" name="{{ content.name }}" {% if content.value %} value="{{ content.value }}" {% endif %}>
+  {% endif %}
+  {% endfor %}
+  {% if session.csrf_token %}
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  {% endif %}
+  <button class="form-button form-button--send" type="submit">{{ submit_label }}</button>
+</form>
+{% endmacro %}

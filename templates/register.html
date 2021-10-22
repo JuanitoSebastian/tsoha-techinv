@@ -2,18 +2,19 @@
 {% set active_page = "login" %}
 {% block content %}
 <div class="wrapper">
-  <p>Create user.</p>
-  <form action="/register" method="POST">
-    <p>Username:<br>
-      <input type="text" name="username">
-    </p>
-    <p>Password:<br>
-      <input type="password" name="password">
-    </p>
-    <p>Admin:
-      <input type="checkbox" name="admin">
-    </p>
-    <button type="submit">Register</button>
-  </form>
+  <div class="container">
+    <h1>Register</h1>
+    <form class="login-form" action="/register" method="POST">
+      <p class="form-caption">Username:</p>
+      <input class="form-input" type="text" name="username">
+
+      <p class="form-caption">Password:</p>
+      <input class="form-input" type="password" name="password">
+
+      <p class="form-caption">Admin:</p>
+      <input class="form-input" type="checkbox" name="admin">
+      <button class="form-button form-button--send" type="submit">Register</button>
+    </form>
+  </div>
 </div>
 {% endblock %}

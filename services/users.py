@@ -1,4 +1,5 @@
 from db import db
+import secrets
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import session
 
@@ -18,19 +19,20 @@ def check_user_credentials(username, password):
 
   if not user:
     # Invalid username
-    print("Invalid username!")
     return False
   else:
     if check_password_hash(user.password, password):
       # Correct password 
-      print("Correct password")
-      session["user_id"] = user.id
-      session["username"] = user.username
+      initiate_session(user.id, user.username)
       return True
     else:
       # Incorrect password
-      print("Incorrect password")
       return False
+
+def initiate_session(user_id_to_set, username_to_set):
+  session["user_id"] = user_id_to_set
+  session["username"] = username_to_set
+  session["csrf_token"] = secrets.token_hex(16)
 
 
 def create_user(username, password, is_admin):
@@ -55,8 +57,19 @@ def get_username(user_id):
   return user.username  
 
 def user_id():
-    return session.get("user_id", 0)
+  return session.get("user_id", 0)
+
+def get_csrf_token():
+  return session.get("csrf_token")
+
+def is_user_admin():
+  if user_id() == 0: return False
+  sql = "SELECT isAdmin FROM users WHERE id=:user_id"
+  result = db.session.execute(sql, { "user_id": user_id() })
+  is_admin = result.fetchone()[0]
+  return is_admin
 
 def end_session():
   del session["user_id"]
   del session["username"]
+  del session["csrf_token"]

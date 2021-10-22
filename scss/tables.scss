@@ -1,0 +1,40 @@
+@use "colors";
+
+.equipment-table {
+  width: 100%;
+  font-size: 14px;
+}
+
+.equipment-table tr {
+  line-height: 30px;
+  transition: all 250ms;
+}
+
+.equipment-table--clickable tr:not(:first-child) {
+  cursor: pointer;
+}
+
+.equipment-table--clickable tr:not(:first-child):hover {
+  scale: 1.02;
+}
+
+.equipment-table th, td {
+  border-bottom: 1px solid colors.$gray-light;
+  border-radius: 10px;
+  text-align: left;
+  padding: 2px 10px;
+}
+
+.equipment-table th {
+  background-color: colors.$lilac-medium;
+  color: colors.$white;
+}
+
+.equipment-table td {
+  background-color: colors.$white;
+}
+
+.equipment-table a {
+  color: colors.$black;
+  text-decoration: none;
+}

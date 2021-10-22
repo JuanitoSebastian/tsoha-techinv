@@ -1,0 +1,121 @@
+@use "forms";
+@use "navigation";
+@use "colors";
+@use "action-bar";
+@use "notification-bar";
+@use "tables";
+
+body {
+  background-color: colors.$lilac-light;
+  font-family: 'Azeret Mono', monospace;
+  padding: 0; 
+  margin: 0 
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  font-family: 'Azeret Mono', monospace;
+  font-size: 14px;
+}
+
+h1, h2, h3 {
+  font-family: 'Azeret Mono', monospace;
+}
+
+.header-bar {
+  height: 60px;
+  padding: 0px 20px 0px 20px;
+  background-color: colors.$lilac-light;
+  color: colors.$lilac;
+}
+
+
+.container {
+  background-color: colors.$white;
+  border-radius: 10px;
+  padding: 10px 20px 30px 30px;
+}
+
+.container h1, .container h2, .container h3 {
+  color: colors.$lilac;
+  text-align: center;
+}
+
+.container a {
+  color: colors.$lilac;
+  font-weight: bold;
+}
+
+.title-bar {
+  background: colors.$white;
+  background: linear-gradient(0deg, colors.$gray-lighter 0%, colors.$white 23%); 
+  padding: 0px 5px 20px 5px;
+  color: colors.$lilac;
+  display: flex;
+}
+
+.title-bar-text {
+  float: left;
+}
+
+.error-message {
+  text-align: center;
+}
+
+.device-amount-badge-text {
+  font-weight: bold;
+  color: colors.$white;
+  background-color: colors.$lilac;
+  border-radius: 5px;
+  padding: 1px 5px;
+  display: inline;
+}
+
+@media only screen and (min-width: 1080px) {
+  .wrapper {
+    margin-top: 10px;
+    width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px 10px;
+  }
+}
+
+@media only screen and (max-width: 1079px) {
+  .wrapper {
+    margin-top: 10px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px 10px;
+  }
+}
+
+button {
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: colors.$lilac;
+  font-family: 'Anonymous Pro', monospace;
+  font-weight: bold;
+}
+
+.btn-group:after {
+  display: table;
+}
+
+.container--blurred {
+  filter: blur(2px);
+}
+
+.italic {
+  font-style: italic;
+}
