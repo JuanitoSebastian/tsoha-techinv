@@ -14,6 +14,7 @@ form {
   background-color: colors.$gray-lighter;
   border-bottom: colors.$lilac-medium 3px solid;
   transition: all 250ms;
+  display: block;
 }
 
 .form-input {
@@ -23,14 +24,23 @@ form {
   display: block;
 }
 
+
 .form-button--send {
   float: right;
 }
 
-.form-button--send:hover {
+.form-button--send:not(:disabled):hover {
   border-bottom-color: colors.$mint;
+}
+
+.form-button:disabled {
+  cursor: default;
 }
 
 .form-caption {
   font-weight: bold;
+}
+
+fieldset {
+  border: none;
 }

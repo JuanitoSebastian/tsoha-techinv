@@ -2,11 +2,17 @@
 {% import "components.html" as components %}
 {% import "scripts.html" as scripts %}
 {% block head %}
+{% if equipment|length > 0 %}
 {{ scripts.make_table_clickable() }}
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="wrapper">
   {{ components.action_bar([("/create/device", "create", "➕ Create new device")])}}
+  {% if equipment|length > 0 %}
   {{ components.clickable_table(["Model", "Manufacturer", "Stock"], equipment, "equipment") }}
+  {% else %}
+  <p>No equipment in inventry.</p>
+  {% endif %}
 </div>
 {% endblock %}

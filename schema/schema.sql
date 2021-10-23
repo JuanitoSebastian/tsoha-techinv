@@ -59,4 +59,4 @@ CREATE TABLE userreservations (
 CREATE TABLE usermanufacturers (
   user_id INTEGER REFERENCES users ON DELETE CASCADE,
   manufacturer_id INTEGER REFERENCES manufacturers ON DELETE CASCADE
-)
+);

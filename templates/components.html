@@ -1,9 +1,3 @@
-{% macro button_link(text, href)%}
-<form action="{{ href }}">
-  <button type="submit">{{ text }}</button>
-</form>
-{% endmacro %}
-
 {% macro equipment_title_bar(model, manufacturer, username, count) %}
 <div class="title-bar">
   <div class="wrapper">
@@ -56,7 +50,7 @@
   {% endif%}
   {% endfor %}
 </ul>
-{% endmacro%}
+{% endmacro %}
 
 {% macro clickable_table(header_titles, content, link_path) %}
 <table class="equipment-table equipment-table--clickable" id="clickable-table">
@@ -78,32 +72,39 @@
 </table>
 {% endmacro %}
 
-{% macro form(contents, class, action, submit_label) %}
-<form class="creation-form" action="{{ action }}" method="POST">
-  {% for type, content in contents %}
-  {% if type == "select" %}
-  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
-  <select class="form-input" type="number" name="{{ content.name }}">
-    {% for option in content.options %}
-    <option value="{{ option.value }}" {% if option.value == content.selected %} selected {% endif %}>{{ option.label }}
-    </option>
+{% macro form(contents, class, action, submit_label, disabled = False) %}
+<form class="{{ class }}" action="{{ action }}" method="POST">
+  <fieldset {% if disabled %} disabled="disabled" {% endif %}>
+    {% for type, content in contents %}
+    {% if type == "select" %}
+    <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+    <select class="form-input" type="number" name="{{ content.name }}">
+      {% for option in content.options %}
+      <option value="{{ option.value }}" {% if option.value==content.selected %} selected {% endif %}>{{ option.label }}
+      </option>
+      {% endfor %}
+    </select>
+    {% elif type == "password" %}
+    <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+    <input class="form-input" type="password" name="{{ content.name }}">
+    {% elif type == "text" %}
+    <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+    <input class="form-input" type="text" name="{{ content.name }}" {% if content.value %} value="{{ content.value }}"
+      {% endif %}>
+    {% elif type == "date" %}
+    <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
+    <input class="form-input" type="date" name="{{ content.name }}" {% if content.value %} value="{{ content.value }}"
+      {% endif %}>
+    {% elif type == "hidden" %}
+    <input type="hidden" name="{{ content.name }}" value="{{ content.value }}">
+    {% endif %}
     {% endfor %}
-  </select>
-  {% elif type == "password" %}
-  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
-  <input class="form-input" type="password" name="{{ content.name }}">
-  {% elif type == "text" %}
-  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
-  <input class="form-input" type="text" name="{{ content.name }}" {% if content.value %} value="{{ content.value }}" {%
-    endif %}>
-  {% elif type == "date" %}
-  <label class="form-caption" for="{{ content.name }}">{{ content.label }}</label>
-  <input class="form-input" type="date" name="{{ content.name }}" {% if content.value %} value="{{ content.value }}" {% endif %}>
-  {% endif %}
-  {% endfor %}
-  {% if session.csrf_token %}
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-  {% endif %}
-  <button class="form-button form-button--send" type="submit">{{ submit_label }}</button>
+    {% if session.csrf_token %}
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    {% endif %}
+    <button class="form-button form-button--send" type="submit">{{ submit_label }}</button>
+    {% if disabled %}
+    {% endif %}
+  </fieldset>
 </form>
 {% endmacro %}

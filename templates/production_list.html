@@ -4,12 +4,18 @@
 {% import "scripts.html" as scripts %}
 
 {% block head %}
+{% if productions|length > 0 %}
 {{ scripts.make_table_clickable() }}
+{% endif %}
 {% endblock %}
 
 {% block content %}
 <div class="wrapper">
   {{ components.action_bar([("/create/production", "create", "➕ Create new production")])}}
+  {% if productions|length > 0 %}
   {{ components.clickable_table(["Name", "Starting", "Ending"], productions, "productions") }}
+  {% else %}
+  <p>No productions.</p>
+  {% endif %}
 </div>
 {% endblock %}

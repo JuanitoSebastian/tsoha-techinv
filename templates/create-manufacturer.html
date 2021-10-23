@@ -28,7 +28,7 @@
 <div class="wrapper">
   <div class="container{% if session.username is not defined %} container--blurred{% endif %}">
     <h2>Add a manufacturer</h2>
-    {{ components.form(form_content, "creation-form", "/create/manufacturer", "Add manufacturer") }}
+    {{ components.form(form_content, "creation-form", "/create/manufacturer", "Add manufacturer", session.user_id is not defined) }}
   </div>
 </div>
 {% endblock %}

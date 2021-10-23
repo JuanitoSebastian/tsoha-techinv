@@ -17,3 +17,24 @@
   document.addEventListener("DOMContentLoaded", makeRowsClickable)
 </script>
 {% endmacro %}
+
+{% macro confirmation_button(element_id, message, href) %}
+<script>
+  function deleteButton() {
+    const button = document.getElementById("{{ element_id }}")
+    var count = 0
+
+    button.addEventListener("click", () => {
+      if (count > 0) {
+        window.location.href = "{{ href }}"
+      }
+
+      if (count == 0) {
+        button.innerHTML = "{{ message }}"
+        count += 1
+      }
+    })
+  }
+  document.addEventListener("DOMContentLoaded", deleteButton)
+</script>
+{% endmacro %}

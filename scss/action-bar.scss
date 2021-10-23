@@ -15,8 +15,12 @@
   padding: 5px 10px;
   background-color: colors.$white;
   border-bottom: colors.$lilac-medium 3px solid;
-  transition: all 250ms;
+  transition: all 150ms ease-out;
   cursor: pointer;
+}
+
+.action-bar-item:hover {
+  transform:translateY(1px);
 }
 
 .action-bar-item--destructive:hover {

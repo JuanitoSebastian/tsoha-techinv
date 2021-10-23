@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% import "components.html" as components %}
+{% set active_page = "productions" %}
+{% set form_content = ([
+  ("text", {
+    "name": "name",
+    "label": "Name",
+    "value": production.name
+  }),
+  ("date", {
+    "name": "starting",
+    "label": "Starting",
+    "value": production.starting
+  }),
+  ("date", {
+    "name": "ending",
+    "label": "Ending",
+    "value": production.ending
+  }),
+  ("hidden", {
+    "name": "confirmation",
+    "value": affected_equipment is defined
+  })
+  ]) %}
+{% block content %}
+<div class="wrapper">
+  <div class="container{% if session.username is not defined %} container--blurred{% endif %}">
+    <h2>Edit production</h2>
+    {% if affected_equipment %}<p>Because of overlapping reservations, making these changese will cause {{ affected_equipment }} reservations to be removed from this production. Are you sure you want to continue?</p>{% endif %}
+    {{ components.form(form_content, "creation-form", "/edit/production/%s" % production.id, "Save changes", session.user_id is not defined) }}
+  </div>
+</div>
+{% endblock %}

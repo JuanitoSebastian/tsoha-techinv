@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
+{% import "components.html" as components %}
 {% set active_page = 'create' %}
+{% set form_content = [
+  ("text", {
+    "name": "serialnum",
+    "label": "Serial number"
+  })
+  ] %}
 {% block content %}
 <div class="wrapper">
   <div class="container{% if session.username is not defined %} container--blurred{% endif %}">
     <h2>Add inventory entry</h2>
     <h3>{{ device.model }} by {{ device.name }}</h3>
-    <form class="creation-form" action="{{ '/create/inventory/%s'%device.id }}" method="POST">
-      <p class="form-caption">Serial number:</p>
-      <input class="form-input" type="text" name="serialnum">
-      
-      <button class="form-button form-button--send" type="submit" {% if session.username is not defined %} disabled {% endif %}>Add</button>
+    {{ components.form(form_content, "creation-form", "/create/inventory/%s" % device.id, "Add to inventory", session.user_id is not defined) }}   
   </div>
 </div>
 {% endblock %}

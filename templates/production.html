@@ -1,10 +1,15 @@
 {% extends "layout.html" %}
 {% set active_page = 'productions' %}
 {% import "components.html" as components %}
+{% import "scripts.html" as scripts %}
 {% set action_bar_content = [
   ("/reserve?production=%s" % production.id, "create", "➕ Reserve equipment"),
-  ("", "destructive", "🗑 Delete production")
+  ("/edit/production/%s"%production.id, "edit", "🖌 Edit production"),
+  ("", "destructive_confirm", "🗑 Delete production")
   ] -%}
+{% block head %}
+{{ scripts.confirmation_button("action-bar-confirm", "❌ Delete now", "/remove/") }}
+{% endblock %}
 {% block content %}
 {{ components.production_title_bar(production.name, "%s - %s" % (production.starting, production.ending), production.creator, reservations|length) }}
 <div class="wrapper">
@@ -27,6 +32,5 @@
   {% else %}
   <p>No equipment reserved for this production.</p>
   {% endif %}
-
 </div>
 {% endblock %}

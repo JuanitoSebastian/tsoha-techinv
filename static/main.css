@@ -12,6 +12,7 @@ form {
   background-color: #F3F3F7;
   border-bottom: #BEC2E0 3px solid;
   transition: all 250ms;
+  display: block;
 }
 
 .form-input {
@@ -25,12 +26,20 @@ form {
   float: right;
 }
 
-.form-button--send:hover {
+.form-button--send:not(:disabled):hover {
   border-bottom-color: #A5E8C2;
+}
+
+.form-button:disabled {
+  cursor: default;
 }
 
 .form-caption {
   font-weight: bold;
+}
+
+fieldset {
+  border: none;
 }
 
 .navigation-bar {
@@ -98,8 +107,12 @@ form {
   padding: 5px 10px;
   background-color: white;
   border-bottom: #BEC2E0 3px solid;
-  transition: all 250ms;
+  transition: all 150ms ease-out;
   cursor: pointer;
+}
+
+.action-bar-item:hover {
+  transform: translateY(1px);
 }
 
 .action-bar-item--destructive:hover {
