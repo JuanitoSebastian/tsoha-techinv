@@ -35,6 +35,7 @@
     {% endfor %}
   </table>
   {% if session.production_id %}
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   <button class="form-button form-button--send" type="submit">Save reservations</button>
   </form>
   {% endif %}

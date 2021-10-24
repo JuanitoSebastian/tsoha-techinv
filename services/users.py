@@ -8,10 +8,7 @@ def check_if_user_exists(username):
     sql = "SELECT COUNT(*) FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username": username}).fetchone()
 
-    if result.count > 0:
-        return True
-
-    return False
+    return result.count > 0
 
 
 def check_user_credentials(username, password):

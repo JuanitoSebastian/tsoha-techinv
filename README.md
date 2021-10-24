@@ -18,4 +18,11 @@ Tech Inventory on sovellus, jossa voi pitää inventaariota esitystekniikan lait
 Tech Inventoryä voi testata [Herokussa](https://tsoha-techinv.herokuapp.com/). 
 
 ## Sovelluksen lopullinen tilanne
-Sain toteutettua lähes kaikki toiminnot, jotka projektin alussa kirjasin tavoitteiksi. Olen eritätin tyytyväinen työni lopputuloksesta, minusta sovelluksesta tuli oikein hyvä. Projektin loppupuolella huomasin, että alkoi kasvaa aika suureksi, eikä minulla riittäny aika hioa kaikkia sovelluksen toimintoja sellaiseksi kuin olisin halunnut. Etenkin laitteiden varaamisessa olisi mielestäni yhä työstettävää.
+Sain toteutettua lähes kaikki toiminnot, jotka projektin alussa kirjasin tavoitteiksi. Olen tyytyväinen työni lopputuloksesta, ja minusta sovelluksesta tuli oikein hyvä. Projektin loppupuolella huomasin, että alkoi kasvaa aika suureksi, eikä minulla riittäny aika hioa kaikkia sovelluksen toimintoja sellaiseksi kuin olisin halunnut. Etenkin laitteiden varaamisessa olisi mielestäni yhä työstettävää.
+
+### Tietokanta
+![Diagram of Database](https://raw.githubusercontent.com/JuanitoSebastian/tsoha-techinv/main/documentation/techinv_db.png)
+Tietokanta koostuu 11 taulusta.
+
+### Ulkoasu
+Toteutin sovelluksen ulkoasun manuaalisesti ilman kirjastoja. Kirjoitin tyylit käyttämällä .scss, jotka käänsin [Sassilla](https://sass-lang.com/) normaaliksi .css:ksi.

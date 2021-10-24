@@ -5,7 +5,7 @@ from services.users import user_id, is_user_admin
 
 def get_equipment():
     sql = "SELECT equipment.id, equipment.model, manufacturers.name manufacturer, COALESCE(invcount.count, 0) count \
-        FROM (SELECT * FROM equipment WHERE visible=TRUE) AS equipment \
+        FROM equipment \
         JOIN manufacturers ON manufacturers.id=equipment.manufacturer_id \
         LEFT JOIN (SELECT model_id, COUNT(model_id) FROM inventory GROUP BY model_id) AS invcount ON invcount.model_id=equipment.id"
     result = db.session.execute(sql)
@@ -24,7 +24,7 @@ def insert_device(model, manufacturer_id):
     if user_id() == 0:
         raise UserAuthorityError("User not logged in")
 
-    sql = "INSERT INTO equipment (model, manufacturer_id, visible) VALUES (:model, :manufacturer_id, TRUE) RETURNING id"
+    sql = "INSERT INTO equipment (model, manufacturer_id) VALUES (:model, :manufacturer_id) RETURNING id"
     result = db.session.execute(sql, {"model": model, "manufacturer_id": manufacturer_id})
     equipment_id = result.fetchone()[0]
     sql = "INSERT INTO userequipment (user_id, equipment_id) VALUES (:user_id, :equipment_id)"
